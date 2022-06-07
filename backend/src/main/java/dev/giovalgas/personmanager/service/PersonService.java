@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PersonService {
 
-  public void logicallyDeletePerson() {
-
-  }
-
   public void createPerson() {
 
   }
@@ -19,7 +15,11 @@ public class PersonService {
 
   }
 
-  public void getAllPersonsByFilter(String nameFilter, String emailFilter, boolean enabledFilter) {
+  public void logicallyDeletePerson() {
+
+  }
+
+  public void getAllPeopleByFilter(String nameFilter, String emailFilter, boolean enabledFilter) {
 
   }
 
