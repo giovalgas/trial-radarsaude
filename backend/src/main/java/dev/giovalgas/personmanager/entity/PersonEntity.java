@@ -1,9 +1,12 @@
 package dev.giovalgas.personmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Data
 @Entity
@@ -32,7 +35,9 @@ public class PersonEntity {
   private String phoneNumber;
 
   @Column(name = "birth_date")
-  private LocalDateTime birthDate;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+  private LocalDate birthDate;
 
   @Column(name = "is_enabled")
   private boolean enabled = true;
