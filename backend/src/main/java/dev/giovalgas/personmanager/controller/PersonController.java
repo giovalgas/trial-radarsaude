@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/person")
+@RequestMapping("/api/v1/person")
 @RequiredArgsConstructor
 public class PersonController {
 
@@ -40,11 +40,6 @@ public class PersonController {
   @GetMapping
   public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(@RequestBody Filter filter) {
     return ResponseEntity.ok(personService.getAllPeopleByFilter(filter));
-  }
-
-  @GetMapping
-  public ResponseEntity<List<PersonEntity>> getAllPeople() {
-    return ResponseEntity.ok(personService.getAllPeople());
   }
 
 }

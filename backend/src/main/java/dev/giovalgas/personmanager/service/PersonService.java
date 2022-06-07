@@ -4,7 +4,9 @@ import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
 import dev.giovalgas.personmanager.repository.PersonRepository;
+import dev.giovalgas.personmanager.util.ModelUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,14 +26,9 @@ public class PersonService {
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
 
-    personEntity.setName(alteredPerson.getName());
-    personEntity.setGender(alteredPerson.getGender());
-    personEntity.setEmail(alteredPerson.getEmail());
-    personEntity.setPhoneNumber(alteredPerson.getPhoneNumber());
-    personEntity.setBirthDate(alteredPerson.getBirthDate());
-    personEntity.setEnabled(alteredPerson.isEnabled());
+    ModelUtils.copyNonNullProperties(alteredPerson, personEntity);
 
-    return personEntity;
+    return personRepository.save(personEntity);
   }
 
   public void logicallyDeletePerson(Long id) {
