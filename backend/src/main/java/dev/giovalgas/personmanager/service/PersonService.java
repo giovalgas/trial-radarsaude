@@ -46,7 +46,7 @@ public class PersonService {
             .filter(personEntity ->
                     personEntity.getName().contains(filter.getNameFilter()) &&
                     personEntity.getEmail().contains(filter.getEmailFilter()) &&
-                    personEntity.isEnabled() == filter.isEnabledFilter()
+                    (personEntity.isEnabled() == filter.isEnabledFilter() || !filter.isEnabledFilter())
             )
             .collect(Collectors.toList());
   }
