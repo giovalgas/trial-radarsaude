@@ -6,7 +6,6 @@ import dev.giovalgas.personmanager.exception.NotFoundException;
 import dev.giovalgas.personmanager.repository.PersonRepository;
 import dev.giovalgas.personmanager.util.ModelUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,9 +43,10 @@ public class PersonService {
   public List<PersonEntity> getAllPeopleByFilter(Filter filter) {
     return personRepository.findAll().stream()
             .filter(personEntity ->
-                    personEntity.getName().contains(filter.getNameFilter()) &&
-                    personEntity.getEmail().contains(filter.getEmailFilter()) &&
-                    (personEntity.isEnabled() == filter.isEnabledFilter() || !filter.isEnabledFilter())
+                    personEntity.getName().contains(filter.getName()) &&
+                    personEntity.getEmail().contains(filter.getEmail()) &&
+                    (personEntity.isEnabled() == filter.isEnabled() || !filter.isEnabled()) &&
+                    (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(PersonEntity.GENDER_KEY_ANY))
             )
             .collect(Collectors.toList());
   }

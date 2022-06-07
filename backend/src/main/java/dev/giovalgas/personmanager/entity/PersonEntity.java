@@ -16,6 +16,7 @@ public class PersonEntity {
   public static final String GENDER_KEY_MALE = "MALE";
   public static final String GENDER_KEY_FEMALE = "FEMALE";
   public static final String GENDER_KEY_OTHER = "OTHER";
+  public static final String GENDER_KEY_ANY = "ANY";
 
   @Id
   @Column(name = "person_id")
