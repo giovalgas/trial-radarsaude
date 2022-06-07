@@ -1,5 +1,6 @@
 package dev.giovalgas.personmanager.service;
 
+import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
 import dev.giovalgas.personmanager.repository.PersonRepository;
@@ -33,22 +34,22 @@ public class PersonService {
     return personEntity;
   }
 
-  public PersonEntity logicallyDeletePerson(Long id) {
+  public void logicallyDeletePerson(Long id) {
 
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
 
     personEntity.setEnabled(false);
+    personRepository.save(personEntity);
 
-    return personEntity;
   }
 
-  public List<PersonEntity> getAllPeopleByFilter(String nameFilter, String emailFilter, boolean enabledFilter) {
+  public List<PersonEntity> getAllPeopleByFilter(Filter filter) {
     return personRepository.findAll().stream()
             .filter(personEntity ->
-                    personEntity.getName().contains(nameFilter) &&
-                    personEntity.getEmail().contains(emailFilter) &&
-                    personEntity.isEnabled() == enabledFilter
+                    personEntity.getName().contains(filter.getNameFilter()) &&
+                    personEntity.getEmail().contains(filter.getEmailFilter()) &&
+                    personEntity.isEnabled() == filter.isEnabledFilter()
             )
             .collect(Collectors.toList());
   }

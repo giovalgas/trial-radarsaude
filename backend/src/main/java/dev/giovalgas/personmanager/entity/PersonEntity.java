@@ -35,6 +35,6 @@ public class PersonEntity {
   private LocalDateTime birthDate;
 
   @Column(name = "is_enabled")
-  private boolean enabled;
+  private boolean enabled = true;
 
 }
