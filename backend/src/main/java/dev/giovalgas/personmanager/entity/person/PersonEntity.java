@@ -20,19 +20,19 @@ public class PersonEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", length = 70)
+  @Column(name = "name", length = 70, nullable = false)
   private String name;
 
-  @Column(name = "gender", length = 10)
+  @Column(name = "gender", length = 10, nullable = false)
   private String gender;
 
-  @Column(name = "phone_number", length = 16)
+  @Column(name = "phone_number", length = 16, nullable = false)
   private String phoneNumber;
 
-  @Column(name = "email")
+  @Column(name = "email", nullable = false)
   private String email;
 
-  @Column(name = "birth_date")
+  @Column(name = "birth_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private LocalDate birthDate;
