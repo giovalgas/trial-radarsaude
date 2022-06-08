@@ -1,12 +1,14 @@
 package dev.giovalgas.personmanager.service;
 
+import dev.giovalgas.personmanager.entity.person.Gender;
 import dev.giovalgas.personmanager.exception.InvalidPropertyException;
 import dev.giovalgas.personmanager.model.Filter;
-import dev.giovalgas.personmanager.entity.PersonEntity;
+import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
 import dev.giovalgas.personmanager.repository.PersonRepository;
 import dev.giovalgas.personmanager.util.ModelUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -47,13 +49,15 @@ public class PersonService {
   public List<PersonEntity> getAllPeopleByFilter(Filter filter) {
     return personRepository.findAll().stream()
             .filter(personEntity ->
-                    personEntity.getName().contains(filter.getName()) &&
-                    personEntity.getEmail().contains(filter.getEmail()) &&
+                    StringUtils.containsIgnoreCase(personEntity.getName(), filter.getName()) &&
+                    StringUtils.containsIgnoreCase(personEntity.getEmail(), filter.getEmail()) &&
                     (personEntity.isEnabled() == filter.isEnabled() || !filter.isEnabled()) &&
-                    (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(PersonEntity.GENDER_KEY_ANY))
+                    (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(Gender.ANY.toString()))
             )
             .collect(Collectors.toList());
   }
+
+
 
   public PersonEntity getPersonById(Long id) {
     return personRepository.findById(id)
