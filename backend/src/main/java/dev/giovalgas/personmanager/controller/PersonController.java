@@ -1,7 +1,7 @@
 package dev.giovalgas.personmanager.controller;
 
 import dev.giovalgas.personmanager.model.Filter;
-import dev.giovalgas.personmanager.entity.PersonEntity;
+import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

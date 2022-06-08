@@ -7,8 +7,10 @@ import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
 import dev.giovalgas.personmanager.repository.PersonRepository;
 import dev.giovalgas.personmanager.util.ModelUtils;
+import dev.giovalgas.personmanager.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.el.util.Validation;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,6 +25,11 @@ public class PersonService {
 
   @ExceptionHandler(InvalidPropertyException.class)
   public PersonEntity createPerson(PersonEntity personEntity) {
+
+    if(!ValidationUtils.isPersonDataValid(personEntity)) {
+      throw new InvalidPropertyException("Invalid person details");
+    }
+
     return personRepository.save(personEntity);
   }
 
@@ -30,6 +37,10 @@ public class PersonService {
 
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
+
+    if(!ValidationUtils.isPersonDataValid(personEntity)) {
+      throw new InvalidPropertyException("Invalid person details");
+    }
 
     ModelUtils.copyNonNullProperties(alteredPerson, personEntity);
 

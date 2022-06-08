@@ -1,4 +1,4 @@
-package dev.giovalgas.personmanager.entity;
+package dev.giovalgas.personmanager.entity.person;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
