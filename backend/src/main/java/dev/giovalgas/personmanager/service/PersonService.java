@@ -38,11 +38,11 @@ public class PersonService {
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
 
+    ModelUtils.copyNonNullProperties(alteredPerson, personEntity);
+
     if(!ValidationUtils.isPersonDataValid(personEntity)) {
       throw new InvalidPropertyException("Invalid person details");
     }
-
-    ModelUtils.copyNonNullProperties(alteredPerson, personEntity);
 
     return personRepository.save(personEntity);
   }
