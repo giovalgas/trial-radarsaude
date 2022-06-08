@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
-@ControllerAdvice
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException{
 

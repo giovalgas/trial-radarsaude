@@ -23,11 +23,10 @@ public class PersonService {
 
   private final PersonRepository personRepository;
 
-  @ExceptionHandler(InvalidPropertyException.class)
   public PersonEntity createPerson(PersonEntity personEntity) {
 
     if(!ValidationUtils.isPersonDataValid(personEntity)) {
-      throw new InvalidPropertyException("Invalid person details");
+      return personEntity;
     }
 
     return personRepository.save(personEntity);
@@ -41,7 +40,7 @@ public class PersonService {
     ModelUtils.copyNonNullProperties(alteredPerson, personEntity);
 
     if(!ValidationUtils.isPersonDataValid(personEntity)) {
-      throw new InvalidPropertyException("Invalid person details");
+      return alteredPerson;
     }
 
     return personRepository.save(personEntity);
