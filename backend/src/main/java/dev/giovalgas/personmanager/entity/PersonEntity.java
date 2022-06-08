@@ -2,6 +2,7 @@ package dev.giovalgas.personmanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,19 +24,23 @@ public class PersonEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NonNull
   @Column(name = "name", length = 70)
   private String name;
 
+  @NonNull
   @Column(name = "gender", length = 10)
   private String gender;
 
+  @NonNull
   @Column(name = "phone_number", length = 16)
   private String phoneNumber;
 
+  @NonNull
   @Column(name = "email")
   private String email;
 
-
+  @NonNull
   @Column(name = "birth_date")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")

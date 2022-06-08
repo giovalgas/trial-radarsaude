@@ -1,5 +1,6 @@
 package dev.giovalgas.personmanager.service;
 
+import dev.giovalgas.personmanager.exception.InvalidPropertyException;
 import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
@@ -7,6 +8,8 @@ import dev.giovalgas.personmanager.repository.PersonRepository;
 import dev.giovalgas.personmanager.util.ModelUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ public class PersonService {
 
   private final PersonRepository personRepository;
 
+  @ExceptionHandler(InvalidPropertyException.class)
   public PersonEntity createPerson(PersonEntity personEntity) {
     return personRepository.save(personEntity);
   }
