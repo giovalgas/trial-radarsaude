@@ -43,7 +43,7 @@ public class PersonEntity {
   @NonNull
   @Column(name = "birth_date")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private LocalDate birthDate;
 
   @Column(name = "is_enabled")
