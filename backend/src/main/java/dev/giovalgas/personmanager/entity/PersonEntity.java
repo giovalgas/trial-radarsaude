@@ -23,17 +23,18 @@ public class PersonEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name")
+  @Column(name = "name", length = 70)
   private String name;
 
-  @Column(name = "gender")
+  @Column(name = "gender", length = 10)
   private String gender;
+
+  @Column(name = "phone_number", length = 16)
+  private String phoneNumber;
 
   @Column(name = "email")
   private String email;
 
-  @Column(name = "phone_number")
-  private String phoneNumber;
 
   @Column(name = "birth_date")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
