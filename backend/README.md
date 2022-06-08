@@ -8,17 +8,17 @@
 - `POST` [*/api/v1/person/*](exemplos/POST.md)
 
 ## Restrições de dados
-###Gender
+### Gender
 **Tipo**: `String` \
 **Tamanho maximo**: `16` \
 **Nullable**: `False` \
 **Nome da variavel**: `gender`
-###Phone Number
+### Phone Number
 **Tipo**: `String` \
 **Tamanho maximo**: `16` \
 **Nullable**: `False` \
 **Nome da variavel**: `phoneNumber`
-###Nome
+### Nome
 **Tipo**: `String` \
 **Tamanho maximo**: `70` \
 **Nullable**: `False` \
