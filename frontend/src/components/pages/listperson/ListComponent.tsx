@@ -86,11 +86,14 @@ export const ListComponent: React.FC = () => {
                         <Skeleton avatar title={false} loading={loading} active>
                             <List.Item.Meta
                                 avatar={<Avatar style={{backgroundColor: avatarColors[Math.floor(Math.random() * (5 + 1))]}} icon={<UserOutlined />} />}
-                                title={<a href="">{item.name}</a>}
+                                title={<label style={{
+                                    color:  item.enabled ? "blue" : "red"
+                                }}>{item.name}</label>}
                                 description={"Email: " + item.email + "; Telefone: " + item.phoneNumber}
                             />
                         </Skeleton>
                     </List.Item>
+
                 )}
             />
             <Pagination
