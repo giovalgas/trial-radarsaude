@@ -79,7 +79,7 @@ export const ListComponent: React.FC = () => {
             <Pagination
                 total={85}
                 showTotal={total => `Temos ${total} pessoas cadastradas`}
-                style={{textAlign: "center"}}
+                style={{textAlign: "center", marginTop: "1rem"}}
                 defaultPageSize={defaultPageSize}
                 defaultCurrent={1}
             />
