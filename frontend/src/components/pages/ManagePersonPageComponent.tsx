@@ -17,11 +17,6 @@ interface Props {
     isEditing?: boolean
 }
 
-interface Completion {
-    isComplete: boolean
-    status?: "CREATE_SUCCESS"|"FAILED"|"EDIT_SUCCESS"
-}
-
 const { Option } = Select;
 
 export const ManagePersonPageComponent: React.FC<Props> = (props) => {
