@@ -9,9 +9,9 @@ import { PersonListPageComponent } from "./components/pages/listperson/PersonLis
 
 import {
     BrowserRouter as Router,
-    Link,
     Routes,
-    Route, useParams
+    Route,
+    Navigate
 } from 'react-router-dom'
 
 
@@ -20,7 +20,8 @@ function App() {
         <Router>
             <MainLayoutComponent>
                 <Routes>
-                    <Route path={"/"} >
+                    <Route path={"/"}>
+                        <Route path={"/"} element={<PersonListPageComponent />} />
                         <Route path={"/people"} element={<PersonListPageComponent />} />
                         <Route path={"/register-person"} element={<ManagePersonPageComponent />} />
                         <Route path={"/edit-person/:id"} element={<ManagePersonPageComponent isEditing={true} />} />
