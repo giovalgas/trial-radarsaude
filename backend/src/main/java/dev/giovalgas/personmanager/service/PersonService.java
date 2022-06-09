@@ -5,6 +5,7 @@ import dev.giovalgas.personmanager.exception.InvalidPropertyException;
 import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
+import dev.giovalgas.personmanager.model.PageData;
 import dev.giovalgas.personmanager.repository.PersonRepository;
 import dev.giovalgas.personmanager.util.ModelUtils;
 import dev.giovalgas.personmanager.util.ValidationUtils;
@@ -24,7 +25,6 @@ public class PersonService {
   private final PersonRepository personRepository;
 
   public PersonEntity createPerson(PersonEntity personEntity) {
-
     if(!ValidationUtils.isPersonDataValid(personEntity)) {
       return personEntity;
     }
@@ -33,7 +33,6 @@ public class PersonService {
   }
 
   public PersonEntity editPerson(Long id, PersonEntity alteredPerson) {
-
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
 
@@ -47,16 +46,14 @@ public class PersonService {
   }
 
   public void logicallyDeletePerson(Long id) {
-
     PersonEntity personEntity = personRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Did not find a person by the id: " + id));
 
     personEntity.setEnabled(false);
     personRepository.save(personEntity);
-
   }
 
-  public List<PersonEntity> getAllPeopleByFilter(Filter filter) {
+  public List<PersonEntity> getAllPeopleByFilter(Filter filter, PageData pageData) {
     return personRepository.findAll().stream()
             .filter(personEntity ->
                     StringUtils.containsIgnoreCase(personEntity.getName(), filter.getName()) &&
@@ -64,6 +61,8 @@ public class PersonService {
                     (personEntity.isEnabled() == filter.isEnabled() || !filter.isEnabled()) &&
                     (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(Gender.ANY.toString()))
             )
+            .skip((long) pageData.getPage() * pageData.getPageSize())
+            .limit(pageData.getPageSize())
             .collect(Collectors.toList());
   }
 

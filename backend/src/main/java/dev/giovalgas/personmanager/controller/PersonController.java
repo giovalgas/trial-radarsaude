@@ -2,6 +2,7 @@ package dev.giovalgas.personmanager.controller;
 
 import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.person.PersonEntity;
+import dev.giovalgas.personmanager.model.PageData;
 import dev.giovalgas.personmanager.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class PersonController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(@RequestBody Filter filter) {
-    return ResponseEntity.ok(personService.getAllPeopleByFilter(filter));
+  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(@RequestBody Filter filter, @RequestBody PageData pageData) {
+    return ResponseEntity.ok(personService.getAllPeopleByFilter(filter, pageData));
   }
 
 }
