@@ -1,12 +1,15 @@
-import {Breadcrumb, Button, DatePicker, Form, Input, Radio, Select} from 'antd';
-import React, { useState } from 'react';
+import {Breadcrumb, Button, DatePicker, Form, Input, Select} from 'antd';
+import React from 'react';
+
+interface Props {
+    isEditing?: boolean
+    editingId?: number
+}
 
 const { Option } = Select;
-type LayoutType = Parameters<typeof Form>[0]['layout'];
 
-export const AddPersonPageComponent: React.FC = () => {
+export const ManagePersonPageComponent: React.FC<Props> = (props) => {
 
-    // @ts-ignore
     return (
         <div>
             <Breadcrumb style={{margin: '16px 0'}}>
@@ -91,11 +94,32 @@ export const AddPersonPageComponent: React.FC = () => {
                         <DatePicker placeholder={"Selecione uma data"}/>
                     </Form.Item>
 
+                    <div style={{display: "flex"}}>
+                        <Form.Item>
+                            <Button type="primary" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
+                        </Form.Item>
 
-                    <Form.Item>
-                        <Button type="primary" style={{alignSelf: "center"}}>Submit</Button>
-                    </Form.Item>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                style=
+                                    {{
+                                        visibility: props.isEditing ? 'visible' : 'hidden',
+                                        alignSelf: "center",
+                                        backgroundColor: "darkred",
+                                        borderColor: "red"
+                                    }}
+
+                            >
+                                Delete Person
+                            </Button>
+                        </Form.Item>
+                    </div>
+
                 </Form>
+
+
+
             </div>
         </div>
     );

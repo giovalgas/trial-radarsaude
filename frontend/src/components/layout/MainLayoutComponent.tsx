@@ -49,7 +49,7 @@ interface Props{
     children?: any;
 }
 
-export const MainLayoutComponent: React.FC<Props> = (Props) => {
+export const MainLayoutComponent: React.FC<Props> = (props) => {
     return (
         <Layout className="layout">
             <Header>
@@ -62,7 +62,7 @@ export const MainLayoutComponent: React.FC<Props> = (Props) => {
                 />
             </Header>
             <Content style={{padding: '0 50px',}}>
-                {Props.children}
+                {props.children}
             </Content>
             <Footer style={{textAlign: 'center',}}>
                 Radar Saude ©2022 Created by Giovani Valgas

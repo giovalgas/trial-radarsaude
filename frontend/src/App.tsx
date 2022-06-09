@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import './index.css';
 
 import { MainLayoutComponent } from "./components/layout/MainLayoutComponent";
-import { AddPersonPageComponent } from "./components/pages/AddPersonPageComponent";
+import { ManagePersonPageComponent } from "./components/pages/ManagePersonPageComponent";
 import { StatisticsPageComponent } from "./components/pages/StatisticsPageComponent";
 import { PersonListPageComponent } from "./components/pages/listperson/PersonListPageComponent";
 
@@ -22,7 +22,7 @@ function App() {
                 <Routes>
                     <Route path={"/"} >
                         <Route path={"/people"} element={<PersonListPageComponent />} />
-                        <Route path={"/register-person"} element={<AddPersonPageComponent />} />
+                        <Route path={"/register-person"} element={<ManagePersonPageComponent />} />
                         <Route path={"/statistics"} element={<StatisticsPageComponent />} />
                     </Route>
                 </Routes>
