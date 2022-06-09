@@ -1,17 +1,23 @@
-import React from "react";
-import {Button, Checkbox, Form, Input} from 'antd';
+import React, {useState} from "react";
+import {Button, Checkbox, Form, Input, Switch} from 'antd';
+import {ListComponent} from "./ListComponent";
 
-export let url = ""
+interface Props {
+    onFinish(values: any): any
+}
 
-export const FilterComponent: React.FC = () => {
+export const FilterFormComponent: React.FC<Props> = (Props) => {
+
     return (
         <>
             <Form
                 style={{display: "flex", justifyContent: "center"}}
                 layout={"inline"}
+                onFinish={Props.onFinish}
             >
                 <Form.Item
                     label="Email"
+                    initialValue={""}
                     name={"email"}
                 >
                     <Input placeholder="Filtro email" />
@@ -19,6 +25,7 @@ export const FilterComponent: React.FC = () => {
 
                 <Form.Item
                     label="Nome"
+                    initialValue={""}
                     name={"name"}
                     style={{marginBottom: "1rem"}
                 }>
@@ -26,14 +33,15 @@ export const FilterComponent: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item
-                    label="Mostrar excluidos"
+                    label="Mostrar somente ativos"
+                    initialValue={true}
                     name={"enabled"}
                 >
-                    <Checkbox/>
+                    <Switch defaultChecked/>
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary">Pesquisar</Button>
+                    <Button type="primary" htmlType="submit" >Pesquisar</Button>
                 </Form.Item>
 
             </Form>

@@ -1,54 +1,75 @@
 import {Avatar, Button, List, Pagination, Skeleton} from 'antd';
 import React, { useEffect, useState } from 'react';
+import {UserOutlined} from "@ant-design/icons";
+import {FilterFormComponent} from "./FilterFormComponent";
 
-interface DataType {
-    gender?: string;
-    name: {
-        title?: string;
-        first?: string;
-        last?: string;
-    };
-    email?: string;
-    picture: {
-        large?: string;
-        medium?: string;
-        thumbnail?: string;
-    };
-    nat?: string;
-    loading: boolean;
+interface Person {
+    id: number
+    name: string
+    gender: string
+    phoneNumber: string
+    email: string
+    birthDate: string
+    enabled: boolean
 }
 
-let pageSize = 10;
-const fakeDataUrl = `https://randomuser.me/api/?results=${pageSize}&inc=name,gender,email,nat,picture&noinfo`;
+interface Filter {
+    name: string
+    email: string
+    enabled: boolean
+    gender: "ANY"|"MALE"|"FEMALE"|"OTHER"
+}
 
 export const ListComponent: React.FC = () => {
 
+    const avatarColors = ['red','orange','green','blue','purple']
+    const defaultPageSize: number = 10
+    let url = new URL(`http://localhost:8080/api/v1/person/`)
+
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<DataType[]>([]);
-    const [list, setList] = useState<DataType[]>([]);
+    const [list, setList] = useState<Person[]>([]);
+    const [pageSize, setPageSize] = useState(0)
+
+    url.search = new URLSearchParams({
+        pageSize: defaultPageSize.toString(),
+        gender: "ANY",
+        enabled: "true"
+    }).toString()
 
     useEffect(() => {
-        fetch(fakeDataUrl)
+        fetch(url)
             .then(res => res.json())
             .then(res => {
                 setInitLoading(false);
-                setData(res.results);
-                setList(res.results);
+                setList(res.content);
+                setPageSize(res.numberOfElements)
             });
     }, []);
 
-    const onLoadMore = () => {
+    const loadPage = (page: number, pageSize: number, filter?: Filter) => {
         setLoading(true);
-        setList(
-            data.concat([...new Array(pageSize)].map(() => ({ loading: true, name: {}, picture: {} }))),
-        );
-        fetch(fakeDataUrl)
+
+        console.log(filter)
+
+        if (filter !== undefined) {
+            url.search = new URLSearchParams({
+                pageSize: pageSize.toString(),
+                page: page.toString(),
+                name: filter.name,
+                email: filter.email,
+                gender: "ANY",
+                enabled: filter.enabled.toString()
+            }).toString()
+
+            console.log(url)
+
+        }
+        fetch(url)
             .then(res => res.json())
             .then(res => {
-                const newData = data.concat(res.results);
-                setData(newData);
-                setList(newData);
+                setList(res.content);
+                setPageSize(res.numberOfElements)
                 setLoading(false);
                 window.dispatchEvent(new Event('resize'));
             });
@@ -56,35 +77,34 @@ export const ListComponent: React.FC = () => {
 
     return (
         <>
+            <FilterFormComponent onFinish={ (values) => {
+                loadPage(1, defaultPageSize, values)
+            }} />
             <List
                 className="demo-loadmore-list"
                 loading={initLoading}
                 itemLayout="horizontal"
-                // loadMore={loadMore}
                 dataSource={list}
                 renderItem={item => (
                     <List.Item
                         actions={[<a key="list-loadmore-edit">edit</a>]}
                     >
-                        <Skeleton avatar title={false} loading={item.loading} active>
+                        <Skeleton avatar title={false} loading={loading} active>
                             <List.Item.Meta
-                                avatar={<Avatar src={item.picture.large} />}
-                                title={<a href="https://ant.design">{item.name?.last}</a>}
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                avatar={<Avatar style={{backgroundColor: avatarColors[Math.floor(Math.random() * (5 + 1))]}} icon={<UserOutlined />} />}
+                                title={<a href="">{item.name}</a>}
+                                description={"Email: " + item.email + "; Telefone: " + item.phoneNumber}
                             />
                         </Skeleton>
                     </List.Item>
                 )}
             />
             <Pagination
-                total={85}
-                showTotal={total => `Temos ${total} pessoas cadastradas`}
+                total={pageSize}
+                showTotal={total => `Achei ${total} pessoas`}
                 style={{textAlign: "center", marginTop: "1rem"}}
-                defaultPageSize={pageSize}
-                onShowSizeChange={(size) => {
-                    pageSize = size
-                    onLoadMore()
-                }}
+                defaultPageSize={defaultPageSize}
+                onChange={loadPage}
                 defaultCurrent={1}
             />
         </>
