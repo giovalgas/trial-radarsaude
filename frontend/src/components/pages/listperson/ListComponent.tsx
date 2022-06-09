@@ -24,8 +24,15 @@ export const ListComponent: React.FC = () => {
 
     const avatarColors = ['red','orange','green','blue','purple']
     const defaultPageSize: number = 10
+
     let url = new URL(`http://localhost:8080/api/v1/person/`)
 
+    const [filter, setFilter] = useState<Filter>({
+        email: "",
+        name: "",
+        gender: "ANY",
+        enabled: true
+    })
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState<Person[]>([]);
@@ -42,28 +49,32 @@ export const ListComponent: React.FC = () => {
             .then(res => res.json())
             .then(res => {
                 setInitLoading(false);
-                setList(res.content);
-                setPageSize(res.numberOfElements)
+                setList(res.pageList);
+                setPageSize(res.nrOfElements)
             });
     }, []);
 
-    const loadPage = (page: number, pageSize: number, filter?: Filter) => {
+    const loadPage = (page: number, pageSize: number, newFilter?: Filter) => {
         setLoading(true);
-        if (filter !== undefined) {
-            url.search = new URLSearchParams({
-                pageSize: pageSize.toString(),
-                page: page.toString(),
-                name: filter.name,
-                email: filter.email,
-                gender: "ANY",
-                enabled: filter.enabled.toString()
-            }).toString()
+
+        url.search = new URLSearchParams({
+            pageSize: pageSize.toString(),
+            page: page.toString(),
+            name: newFilter ? newFilter.name : filter.name,
+            email: newFilter ? newFilter.email : filter.email,
+            gender: "ANY",
+            enabled: newFilter ? newFilter.enabled.toString() : filter.enabled.toString()
+        }).toString()
+
+        if (newFilter) {
+            setFilter(newFilter)
         }
+
         fetch(url)
             .then(res => res.json())
             .then(res => {
-                setList(res.content);
-                setPageSize(res.numberOfElements)
+                setList(res.pageList);
+                setPageSize(res.nrOfElements)
                 setLoading(false);
                 window.dispatchEvent(new Event('resize'));
             });
