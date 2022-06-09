@@ -1,6 +1,5 @@
-import React, {useState} from "react";
-import {Button, Checkbox, Form, Input, Switch} from 'antd';
-import {ListComponent} from "./ListComponent";
+import React from "react";
+import {Button, Form, Input, Switch} from 'antd';
 
 interface Props {
     onFinish(values: any): any

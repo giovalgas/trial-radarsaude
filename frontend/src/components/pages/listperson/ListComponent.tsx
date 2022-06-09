@@ -1,4 +1,4 @@
-import {Avatar, Button, List, Pagination, Skeleton} from 'antd';
+import {Avatar, List, Pagination, Skeleton} from 'antd';
 import React, { useEffect, useState } from 'react';
 import {UserOutlined} from "@ant-design/icons";
 import {FilterFormComponent} from "./FilterFormComponent";

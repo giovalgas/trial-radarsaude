@@ -13,10 +13,7 @@ import {
 } from 'antd';
 
 import {
-    BrowserRouter as Router,
     Link,
-    Routes,
-    Route
 } from 'react-router-dom'
 
 const { Header, Content, Footer } = Layout;

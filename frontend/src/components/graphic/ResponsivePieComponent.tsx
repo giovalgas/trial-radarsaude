@@ -5,29 +5,6 @@ interface Props {
     data: any
 }
 
-const data = [
-    [
-        {
-            "id": "python",
-            "label": "python",
-            "value": 149,
-            "color": "hsl(6, 70%, 50%)"
-        },
-        {
-            "id": "rust",
-            "label": "rust",
-            "value": 470,
-            "color": "hsl(217, 70%, 50%)"
-        },
-        {
-            "id": "sass",
-            "label": "sass",
-            "value": 509,
-            "color": "hsl(218, 70%, 50%)"
-        }
-    ]
-]
-
 export const ResponsivePieComponent: React.FC<Props> = (props: Props) => {
 
     console.log(props.data)

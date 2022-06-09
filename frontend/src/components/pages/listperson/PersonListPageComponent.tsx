@@ -1,6 +1,5 @@
 import {Breadcrumb} from "antd";
 import {ListComponent} from "./ListComponent";
-import {FilterFormComponent} from "./FilterFormComponent";
 
 export const PersonListPageComponent: React.FC = () => {
 

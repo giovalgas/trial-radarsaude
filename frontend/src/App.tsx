@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
 
@@ -11,7 +11,6 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Navigate
 } from 'react-router-dom'
 
 
