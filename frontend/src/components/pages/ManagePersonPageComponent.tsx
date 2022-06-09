@@ -70,6 +70,7 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
             .then(res => {
                 if(res.ok) {
                     alert("Usuario criado com sucesso")
+                    form.resetFields()
                 }else {
                     alert("Erro ao criar usuario")
                 }
@@ -107,7 +108,7 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                             createPerson(values)
                         }
                     }}
-                    initialValues= {{ remember: true }}
+                    initialValues= {{ remember: false }}
                     autoComplete="off"
                     form={form}
                 >
