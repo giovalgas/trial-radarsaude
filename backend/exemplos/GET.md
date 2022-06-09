@@ -29,8 +29,12 @@ Exemplo de filtros: \
 
 ```json
 {
-    "enabled": true,
-    "email": "gmail",
+    "pageData": {
+      "pageSize": 25, // Default 25
+      "page": 1 // Default 1
+    },
+    "enabled": true, // true: Retorna só quem está abilitado, false: Retorna todo mundo
+    "email": "gmail", 
     "name": "John",
     "gender": "MALE"
 }
