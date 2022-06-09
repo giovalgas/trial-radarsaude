@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/person")
 @RequiredArgsConstructor
@@ -41,12 +42,16 @@ public class PersonController {
 
   @GetMapping
   public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(
-          @RequestBody Filter filter,
+          @RequestBody(required = false) Filter filter,
           @RequestParam(name = "pageData", required = false) PageData pageData
   ) {
 
     if(pageData == null) {
       pageData = new PageData();
+    }
+
+    if(filter == null) {
+      filter = new Filter();
     }
 
     return ResponseEntity.ok(personService.getAllPeopleByFilter(filter, pageData));
