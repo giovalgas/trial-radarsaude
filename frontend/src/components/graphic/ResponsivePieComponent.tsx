@@ -6,9 +6,6 @@ interface Props {
 }
 
 export const ResponsivePieComponent: React.FC<Props> = (props: Props) => {
-
-    console.log(props.data)
-
     return (
         <ResponsivePie
             data={props.data}
