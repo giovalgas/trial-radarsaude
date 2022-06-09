@@ -2,7 +2,7 @@
 Projeto feito como desafio técnico na www.radarsaude.com.br
 
 ## Documentação API
-####- `REST API` [Documentação](backend/README.md)
+#### - `REST API` [Documentação](backend/README.md)
 
 ## Frontend Preview<table>
 <table>
@@ -15,3 +15,4 @@ Projeto feito como desafio técnico na www.radarsaude.com.br
         <td><img src="https://i.gyazo.com/4446dee02377384c5a7f8c69ed109257.png"></td>
     </tr>
 </table>
+ 
