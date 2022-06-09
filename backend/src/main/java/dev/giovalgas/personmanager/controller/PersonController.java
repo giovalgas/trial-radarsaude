@@ -41,7 +41,7 @@ public class PersonController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(Filter filter) {
+  public ResponseEntity<Page<PersonEntity>> getAllPeopleByFilter(Filter filter) {
 
     System.out.println(filter.toString());
 
@@ -49,7 +49,7 @@ public class PersonController {
       filter = new Filter();
     }
 
-    return ResponseEntity.ok(personService.getAllPeopleByFilter(filter));
+    return ResponseEntity.ok(personService.getPageByFilter(filter));
   }
 
 }

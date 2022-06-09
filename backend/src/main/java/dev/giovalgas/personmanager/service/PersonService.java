@@ -11,6 +11,7 @@ import dev.giovalgas.personmanager.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.el.util.Validation;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -52,7 +53,7 @@ public class PersonService {
     personRepository.save(personEntity);
   }
 
-  public List<PersonEntity> getAllPeopleByFilter(Filter filter) {
+  private List<PersonEntity> getAllPeopleByFilter(Filter filter) {
     return personRepository.findAll().stream()
             .filter(personEntity ->
                     StringUtils.containsIgnoreCase(personEntity.getName(), filter.getName()) &&
@@ -60,12 +61,15 @@ public class PersonService {
                     (personEntity.isEnabled() == filter.isEnabled() || !filter.isEnabled()) &&
                     (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(Gender.ANY.toString()))
             )
-            .skip((long) (filter.getPage() - 1) * filter.getPageSize())
-            .limit(filter.getPageSize())
             .collect(Collectors.toList());
   }
 
+  public Page<PersonEntity> getPageByFilter(Filter filter) {
+    Pageable pageable = PageRequest.of(filter.getPage(), filter.getPageSize(), Sort.by("name"));
+    List<PersonEntity> content = this.getAllPeopleByFilter(filter);
 
+    return new PageImpl<>(content, pageable, content.size());
+  }
 
   public PersonEntity getPersonById(Long id) {
     return personRepository.findById(id)
