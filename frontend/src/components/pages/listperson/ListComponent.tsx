@@ -37,6 +37,7 @@ export const ListComponent: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState<Person[]>([]);
     const [pageSize, setPageSize] = useState(0)
+    const [page, setPage] = useState(1)
 
     url.search = new URLSearchParams({
         pageSize: defaultPageSize.toString(),
@@ -75,6 +76,7 @@ export const ListComponent: React.FC = () => {
             .then(res => {
                 setList(res.pageList);
                 setPageSize(res.nrOfElements)
+                setPage(page)
                 setLoading(false);
                 window.dispatchEvent(new Event('resize'));
             });
@@ -113,6 +115,7 @@ export const ListComponent: React.FC = () => {
                 style={{textAlign: "center", marginTop: "1rem"}}
                 defaultPageSize={defaultPageSize}
                 onChange={loadPage}
+                current={page}
                 defaultCurrent={1}
             />
         </>
