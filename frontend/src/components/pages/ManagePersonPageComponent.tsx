@@ -80,7 +80,11 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
     function deletePerson(id: string) {
         fetch(url + "" + id, { method: "DELETE" })
             .then(res => {
-                console.log(res)
+                if(res.ok) {
+                    alert("Usuario deletado com sucesso")
+                }else {
+                    alert("Erro ao deletar usuario")
+                }
             })
     }
 
@@ -177,7 +181,9 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
+                        <Button type="primary" htmlType="submit" style={{alignSelf: "center", marginRight: "1rem"}}>
+                            {props.isEditing ? "Editar pessoa" : "Criar pessoa"}
+                        </Button>
                         <Button
                             onClick={() => {
                                 if(id !== undefined) {
