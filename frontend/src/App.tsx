@@ -5,7 +5,7 @@ import './index.css';
 import { MainLayoutComponent } from "./components/layout/MainLayoutComponent";
 import { AddPersonPageComponent } from "./components/pages/AddPersonPageComponent";
 import { StatisticsPageComponent } from "./components/pages/StatisticsPageComponent";
-import { PersonListPageComponent } from "./components/pages/PersonListPageComponent";
+import { PersonListPageComponent } from "./components/pages/listperson/PersonListPageComponent";
 
 import {
     BrowserRouter as Router,
