@@ -64,3 +64,36 @@ OBS: Usar argumentos na URL de Query
   }
 ]
 ```
+
+## `GET` /person/stats/gender-ratio
+
+**URL**: `/api/v1/person/` \
+**METHOD**: `GET`
+
+Retorna dados para o [@nivo](https://nivo.rocks/pie/)
+
+### Resposta de sucesso
+**Código**: `200 OK` \
+**Exemplo Conteúdo**:
+```json
+[
+  {
+    "id": "male",
+    "label": "Masculino",
+    "value": 149,
+    "color": "rgb(0, 170, 243)"
+  },
+  {
+    "id": "female",
+    "label": "Feminino",
+    "value": 470,
+    "color": "rgb(255, 110, 243)"
+  },
+  {
+    "id": "other",
+    "label": "Outro",
+    "value": 509,
+    "color": "rgb(137, 136, 134)"
+  }
+]
+```

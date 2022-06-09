@@ -1,11 +1,11 @@
 # Documentação REST-API
 
 ## Endpoints
-- `DELETE` [*/api/v1/person/{id}*](exemplos/DELETE.md)
-- `PUT` [*/api/v1/person/{id}* ](exemplos/PUT.md)
-- `GET` [*/api/v1/person/{id}*](exemplos/GET.md)
-- `GET` [*/api/v1/person/*](exemplos/GET.md)
-- `POST` [*/api/v1/person/*](exemplos/POST.md)
+- `DELETE` [*/api/v1/person/{id}*](examples/DELETE.md)
+- `PUT` [*/api/v1/person/{id}* ](examples/PUT.md)
+- `GET` [*/api/v1/person/{id}*](examples/GET.md)
+- `GET` [*/api/v1/person/*](examples/GET.md)
+- `POST` [*/api/v1/person/*](examples/POST.md)
 
 ## Restrições de dados
 ### Gender
