@@ -81,7 +81,7 @@ export const ListComponent: React.FC = () => {
                 dataSource={list}
                 renderItem={item => (
                     <List.Item
-                        actions={[<a key="list-loadmore-edit">edit</a>]}
+                        actions={[<a href={"./edit-person/" + item.id} key="list-loadmore-edit">edit</a>]}
                     >
                         <Skeleton avatar title={false} loading={loading} active>
                             <List.Item.Meta
