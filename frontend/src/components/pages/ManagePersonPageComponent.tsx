@@ -44,7 +44,6 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                         gender: res.gender,
                         birthDate: moment(res.birthDate)
                     })
-                    console.log(res)
                 });
         }
     }, [])
