@@ -5,6 +5,7 @@ import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.model.PageData;
 import dev.giovalgas.personmanager.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,15 @@ public class PersonController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(@RequestBody Filter filter, @RequestBody PageData pageData) {
+  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(
+          @RequestBody Filter filter,
+          @RequestParam(name = "pageData", required = false) PageData pageData
+  ) {
+
+    if(pageData == null) {
+      pageData = new PageData();
+    }
+
     return ResponseEntity.ok(personService.getAllPeopleByFilter(filter, pageData));
   }
 

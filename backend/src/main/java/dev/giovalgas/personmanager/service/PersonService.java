@@ -54,6 +54,9 @@ public class PersonService {
   }
 
   public List<PersonEntity> getAllPeopleByFilter(Filter filter, PageData pageData) {
+
+
+
     return personRepository.findAll().stream()
             .filter(personEntity ->
                     StringUtils.containsIgnoreCase(personEntity.getName(), filter.getName()) &&
@@ -61,7 +64,7 @@ public class PersonService {
                     (personEntity.isEnabled() == filter.isEnabled() || !filter.isEnabled()) &&
                     (personEntity.getGender().equals(filter.getGender()) || filter.getGender().equals(Gender.ANY.toString()))
             )
-            .skip((long) pageData.getPage() * pageData.getPageSize())
+            .skip((long) (pageData.getPage() - 1) * pageData.getPageSize())
             .limit(pageData.getPageSize())
             .collect(Collectors.toList());
   }
