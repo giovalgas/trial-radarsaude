@@ -18,8 +18,8 @@ interface DataType {
     loading: boolean;
 }
 
-const defaultPageSize = 10;
-const fakeDataUrl = `https://randomuser.me/api/?results=${defaultPageSize}&inc=name,gender,email,nat,picture&noinfo`;
+let pageSize = 10;
+const fakeDataUrl = `https://randomuser.me/api/?results=${pageSize}&inc=name,gender,email,nat,picture&noinfo`;
 
 export const ListComponent: React.FC = () => {
 
@@ -41,7 +41,7 @@ export const ListComponent: React.FC = () => {
     const onLoadMore = () => {
         setLoading(true);
         setList(
-            data.concat([...new Array(defaultPageSize)].map(() => ({ loading: true, name: {}, picture: {} }))),
+            data.concat([...new Array(pageSize)].map(() => ({ loading: true, name: {}, picture: {} }))),
         );
         fetch(fakeDataUrl)
             .then(res => res.json())
@@ -80,7 +80,11 @@ export const ListComponent: React.FC = () => {
                 total={85}
                 showTotal={total => `Temos ${total} pessoas cadastradas`}
                 style={{textAlign: "center", marginTop: "1rem"}}
-                defaultPageSize={defaultPageSize}
+                defaultPageSize={pageSize}
+                onShowSizeChange={(size) => {
+                    pageSize = size
+                    onLoadMore()
+                }}
                 defaultCurrent={1}
             />
         </>
