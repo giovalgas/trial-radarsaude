@@ -94,27 +94,22 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                         <DatePicker placeholder={"Selecione uma data"}/>
                     </Form.Item>
 
-                    <div style={{display: "flex"}}>
-                        <Form.Item>
-                            <Button type="primary" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
-                        </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
+                        <Button
+                            type="primary"
+                            style=
+                                {{
+                                    visibility: props.isEditing ? 'visible' : 'hidden',
+                                    alignSelf: "center",
+                                    backgroundColor: "darkred",
+                                    borderColor: "red"
+                                }}
 
-                        <Form.Item>
-                            <Button
-                                type="primary"
-                                style=
-                                    {{
-                                        visibility: props.isEditing ? 'visible' : 'hidden',
-                                        alignSelf: "center",
-                                        backgroundColor: "darkred",
-                                        borderColor: "red"
-                                    }}
-
-                            >
-                                Delete Person
-                            </Button>
-                        </Form.Item>
-                    </div>
+                        >
+                            Delete Person
+                        </Button>
+                    </Form.Item>
 
                 </Form>
 
