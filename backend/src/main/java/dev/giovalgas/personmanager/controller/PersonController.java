@@ -2,13 +2,13 @@ package dev.giovalgas.personmanager.controller;
 
 import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.person.PersonEntity;
-import dev.giovalgas.personmanager.model.PageData;
 import dev.giovalgas.personmanager.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin
@@ -41,20 +41,15 @@ public class PersonController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(
-          @RequestBody(required = false) Filter filter,
-          @RequestParam(name = "pageData", required = false) PageData pageData
-  ) {
+  public ResponseEntity<List<PersonEntity>> getAllPeopleByFilter(Filter filter) {
 
-    if(pageData == null) {
-      pageData = new PageData();
-    }
+    System.out.println(filter.toString());
 
     if(filter == null) {
       filter = new Filter();
     }
 
-    return ResponseEntity.ok(personService.getAllPeopleByFilter(filter, pageData));
+    return ResponseEntity.ok(personService.getAllPeopleByFilter(filter));
   }
 
 }
