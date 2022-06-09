@@ -1,14 +1,46 @@
-import {Breadcrumb, Button, DatePicker, Form, Input, Select} from 'antd';
-import React from 'react';
+import {Alert, Breadcrumb, Button, DatePicker, Form, Input, Select} from 'antd';
+import React, {useEffect, useState} from 'react';
+
+interface Person {
+    id: number
+    name: string
+    gender: string
+    phoneNumber: string
+    email: string
+    birthDate: string
+    enabled: boolean
+}
 
 interface Props {
     isEditing?: boolean
     editingId?: number
 }
 
+interface Completion {
+    isComplete: boolean
+    status?: "CREATE_SUCCESS"|"FAILED"|"EDIT_SUCCESS"
+}
+
 const { Option } = Select;
 
 export const ManagePersonPageComponent: React.FC<Props> = (props) => {
+
+    const url = new URL('http://localhost:8080/api/v1/person/')
+
+    function editPerson(values: Person, id: number) {
+
+    }
+
+    function createPerson(values: Person) {
+        fetch(url, {method: "POST", body: JSON.stringify(values), headers: {'Content-Type': "application/json"}})
+            .then(res => {
+                if(res.status == 200) {
+                    alert("Usuario criado com sucesso")
+                }else {
+                    alert("Erro ao criar usuario")
+                }
+            });
+    }
 
     return (
         <div>
@@ -16,13 +48,20 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Adicionar Pessoa</Breadcrumb.Item>
             </Breadcrumb>
-
             <div className="site-layout-content">
+
                 <Form
                     layout={"vertical"}
                     labelCol={{xxl: { span: 16, offset: 8 } }}
                     wrapperCol={{xxl: { span: 16, offset: 8 } }}
                     size={"middle"}
+                    onFinish={(values) => {
+                        if(props.isEditing && props.editingId !== undefined) {
+                            editPerson(values, props.editingId)
+                        }else {
+                            createPerson(values)
+                        }
+                    }}
                     initialValues={{ remember: true }}
                     autoComplete="off"
                 >
@@ -74,14 +113,14 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                         rules={[{required: true, message: "Selecione o seu gênero!"}
                         ]}
                         name="gender"
-                        label="Gender"
+                        label="Gênero / Sexo"
                     >
                         <Select
                             placeholder={"Selecione o seu gênero/sexo"}
                             style={{maxWidth: "16rem"}}
                         >
-                            <Option value="MALE">Homem</Option>
-                            <Option value="FEMALE">Mulher</Option>
+                            <Option value="MALE">Masculino</Option>
+                            <Option value="FEMALE">Feminino</Option>
                             <Option value="OTHER">Outro</Option>
                         </Select>
                     </Form.Item>
@@ -95,7 +134,7 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
+                        <Button type="primary" htmlType="submit" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
                         <Button
                             type="primary"
                             style=
@@ -105,7 +144,6 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                                     backgroundColor: "darkred",
                                     borderColor: "red"
                                 }}
-
                         >
                             Delete Person
                         </Button>
