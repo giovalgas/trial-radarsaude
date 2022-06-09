@@ -198,7 +198,7 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                                     borderColor: "red"
                                 }}
                         >
-                            Delete Person
+                            Deletar pessoa
                         </Button>
                     </Form.Item>
 
