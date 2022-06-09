@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class Filter {
 
-  private int pageSize = 25;
+  private int pageSize = 10;
   private int page = 1;
 
   private String name = "";

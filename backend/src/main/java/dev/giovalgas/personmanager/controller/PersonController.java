@@ -4,6 +4,7 @@ import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class PersonController {
   }
 
   @GetMapping
-  public ResponseEntity<Page<PersonEntity>> getAllPeopleByFilter(Filter filter) {
+  public ResponseEntity<PagedListHolder<PersonEntity>> getAllPeopleByFilter(Filter filter) {
 
     if(filter == null) {
       filter = new Filter();

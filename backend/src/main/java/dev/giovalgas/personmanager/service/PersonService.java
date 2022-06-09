@@ -1,7 +1,6 @@
 package dev.giovalgas.personmanager.service;
 
 import dev.giovalgas.personmanager.entity.person.Gender;
-import dev.giovalgas.personmanager.exception.InvalidPropertyException;
 import dev.giovalgas.personmanager.model.Filter;
 import dev.giovalgas.personmanager.entity.person.PersonEntity;
 import dev.giovalgas.personmanager.exception.NotFoundException;
@@ -10,10 +9,11 @@ import dev.giovalgas.personmanager.util.ModelUtils;
 import dev.giovalgas.personmanager.util.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.el.util.Validation;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.beans.support.SortDefinition;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,11 +64,14 @@ public class PersonService {
             .collect(Collectors.toList());
   }
 
-  public Page<PersonEntity> getPageByFilter(Filter filter) {
-    Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getPageSize(), Sort.by("name"));
+  public PagedListHolder<PersonEntity> getPageByFilter(Filter filter) {
     List<PersonEntity> content = this.getAllPeopleByFilter(filter);
+    PagedListHolder<PersonEntity> holder = new PagedListHolder<>(content);
 
-    return new PageImpl<>(content, pageable, content.size());
+    holder.setPage(filter.getPage() - 1);
+    holder.setPageSize(filter.getPageSize());
+
+    return holder;
   }
 
   public PersonEntity getPersonById(Long id) {
