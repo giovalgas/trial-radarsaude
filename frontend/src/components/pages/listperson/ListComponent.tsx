@@ -49,9 +49,6 @@ export const ListComponent: React.FC = () => {
 
     const loadPage = (page: number, pageSize: number, filter?: Filter) => {
         setLoading(true);
-
-        console.log(filter)
-
         if (filter !== undefined) {
             url.search = new URLSearchParams({
                 pageSize: pageSize.toString(),
@@ -61,9 +58,6 @@ export const ListComponent: React.FC = () => {
                 gender: "ANY",
                 enabled: filter.enabled.toString()
             }).toString()
-
-            console.log(url)
-
         }
         fetch(url)
             .then(res => res.json())
