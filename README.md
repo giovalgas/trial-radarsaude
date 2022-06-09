@@ -4,6 +4,13 @@ Projeto feito como desafio técnico na www.radarsaude.com.br
 ## Documentação API
 #### - `REST API` [Documentação](backend/README.md)
 
+## Como usar
+```cmd
+1. git clone https://github.com/giovalgas/trial_radarsaude
+2. cd trial_radarsaude
+3. docker-compose up --build
+```
+
 ## Frontend Preview<table>
 <table>
     <tr>
