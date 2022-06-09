@@ -1,19 +1,21 @@
 import {Alert, Breadcrumb, Button, DatePicker, Form, Input, Select} from 'antd';
 import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router-dom";
+import {useForm} from "antd/es/form/Form";
+import moment from 'moment';
 
 interface Person {
-    id: number
+    id?: number
     name: string
     gender: string
     phoneNumber: string
     email: string
     birthDate: string
-    enabled: boolean
+    enabled?: boolean
 }
 
 interface Props {
     isEditing?: boolean
-    editingId?: number
 }
 
 interface Completion {
@@ -25,21 +27,61 @@ const { Option } = Select;
 
 export const ManagePersonPageComponent: React.FC<Props> = (props) => {
 
+    const [ form ] = Form.useForm();
+
     const url = new URL('http://localhost:8080/api/v1/person/')
+    const { id } = useParams();
 
-    function editPerson(values: Person, id: number) {
+    useEffect(() => {
+        if(props.isEditing) {
+            fetch(url + "" + id)
+                .then(res => res.json())
+                .then(res => {
+                    form.setFieldsValue({
+                        name: res.name,
+                        email: res.email,
+                        phoneNumber: res.phoneNumber,
+                        gender: res.gender,
+                        birthDate: moment(res.birthDate)
+                    })
+                    console.log(res)
+                });
+        }
+    }, [])
 
+
+    function editPerson(values: Person, id: string) {
+        fetch(
+            url + "" + id,
+            {
+                method: "PUT", body: JSON.stringify(values),
+                headers: {'Content-Type': "application/json"}
+            }
+        ).then(res => {
+            if(res.ok) {
+                alert("Usuario editado com sucesso")
+            }else {
+                alert("Erro ao editar usuario")
+            }
+        });
     }
 
     function createPerson(values: Person) {
         fetch(url, {method: "POST", body: JSON.stringify(values), headers: {'Content-Type': "application/json"}})
             .then(res => {
-                if(res.status == 200) {
+                if(res.ok) {
                     alert("Usuario criado com sucesso")
                 }else {
                     alert("Erro ao criar usuario")
                 }
             });
+    }
+
+    function deletePerson(id: string) {
+        fetch(url + "" + id, { method: "DELETE" })
+            .then(res => {
+                console.log(res)
+            })
     }
 
     return (
@@ -56,14 +98,15 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                     wrapperCol={{xxl: { span: 16, offset: 8 } }}
                     size={"middle"}
                     onFinish={(values) => {
-                        if(props.isEditing && props.editingId !== undefined) {
-                            editPerson(values, props.editingId)
+                        if(props.isEditing && id !== undefined) {
+                            editPerson(values, id)
                         }else {
                             createPerson(values)
                         }
                     }}
-                    initialValues={{ remember: true }}
+                    initialValues= {{ remember: true }}
                     autoComplete="off"
+                    form={form}
                 >
 
                     <Form.Item
@@ -110,10 +153,10 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                     </Form.Item>
 
                     <Form.Item
-                        rules={[{required: true, message: "Selecione o seu gênero!"}
-                        ]}
+                        rules={[{required: true, message: "Selecione o seu gênero!"}]}
                         name="gender"
                         label="Gênero / Sexo"
+
                     >
                         <Select
                             placeholder={"Selecione o seu gênero/sexo"}
@@ -136,6 +179,11 @@ export const ManagePersonPageComponent: React.FC<Props> = (props) => {
                     <Form.Item>
                         <Button type="primary" htmlType="submit" style={{alignSelf: "center", marginRight: "1rem"}}>Submit</Button>
                         <Button
+                            onClick={() => {
+                                if(id !== undefined) {
+                                    deletePerson(id)
+                                }
+                            }}
                             type="primary"
                             style=
                                 {{

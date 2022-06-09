@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
 
 import { MainLayoutComponent } from "./components/layout/MainLayoutComponent";
-import { ManagePersonPageComponent } from "./components/pages/ManagePersonPageComponent";
+import {ManagePersonPageComponent,} from "./components/pages/ManagePersonPageComponent";
 import { StatisticsPageComponent } from "./components/pages/StatisticsPageComponent";
 import { PersonListPageComponent } from "./components/pages/listperson/PersonListPageComponent";
 
@@ -11,7 +11,7 @@ import {
     BrowserRouter as Router,
     Link,
     Routes,
-    Route
+    Route, useParams
 } from 'react-router-dom'
 
 
@@ -23,6 +23,7 @@ function App() {
                     <Route path={"/"} >
                         <Route path={"/people"} element={<PersonListPageComponent />} />
                         <Route path={"/register-person"} element={<ManagePersonPageComponent />} />
+                        <Route path={"/edit-person/:id"} element={<ManagePersonPageComponent isEditing={true} />} />
                         <Route path={"/statistics"} element={<StatisticsPageComponent />} />
                     </Route>
                 </Routes>
