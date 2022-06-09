@@ -43,8 +43,6 @@ public class PersonController {
   @GetMapping
   public ResponseEntity<Page<PersonEntity>> getAllPeopleByFilter(Filter filter) {
 
-    System.out.println(filter.toString());
-
     if(filter == null) {
       filter = new Filter();
     }

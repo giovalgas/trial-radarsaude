@@ -65,7 +65,7 @@ public class PersonService {
   }
 
   public Page<PersonEntity> getPageByFilter(Filter filter) {
-    Pageable pageable = PageRequest.of(filter.getPage(), filter.getPageSize(), Sort.by("name"));
+    Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getPageSize(), Sort.by("name"));
     List<PersonEntity> content = this.getAllPeopleByFilter(filter);
 
     return new PageImpl<>(content, pageable, content.size());
